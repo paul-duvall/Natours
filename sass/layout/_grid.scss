@@ -1,7 +1,6 @@
 // 114rem equivalent to 1140px, an accepted standard viewport width
 .row {
   max-width: $grid-width;
-  background-color: rgb(202, 202, 202);
   margin: 0 auto;
 
   &:not(:last-child){
@@ -14,7 +13,6 @@
   // Replacing ^ with * changes it to "contains"
   // Replacing ^ with $ changes it to "ends with"
   [class^="col-"] {
-    background-color: orangered;
     float: left;
   
     &:not(:last-child){
