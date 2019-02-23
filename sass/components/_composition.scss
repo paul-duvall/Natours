@@ -1,0 +1,41 @@
+.composition {
+  position: relative;
+
+  &__photo {
+    width: 55%;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, .4);
+    border-radius: 2px;
+    outline-offset: 2rem;
+    position: absolute;
+    transition: .2s linear;
+    z-index: 10;
+
+    &--p1 {
+      left: 0;
+      top: -2rem;
+    }
+
+    &--p2 {
+      right: 0;
+      top: 2rem;
+    }
+
+    &--p3 {
+      left: 20%;
+      top: 10rem;
+    }
+
+    &:hover {
+      box-shadow: 0 2.5rem 4rem rgba($color-black, .5);
+      // Outline is similar to border, but it allows 'outline-offset' to be used to create a gap between image and outline
+      outline: 1.5rem solid $color-primary;
+      transform: scale(1.05) translateY(-.5rem);
+      z-index: 20;
+    }
+  }
+
+  // Selects the images that are not hovered
+  &:hover &__photo:not(:hover) {
+    transform: scale(0.95);
+  }
+}
