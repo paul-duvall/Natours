@@ -1,9 +1,11 @@
 .navigation {
   &__checkbox {
+    // Needed for 'checkbox hack' but needs to be hidden
     display: none;
   }
 
   &__button {
+    // The actual button, linked to the label for the checkbox input
     background-color: $color-white;
     height: 7rem;
     width: 7rem;
@@ -12,9 +14,14 @@
     right: 6rem;
     border-radius: 50%;
     z-index: 2000;
+    box-shadow: 0 1rem 3rem rgba($color-black, .1);
+    // Centre aligns the icon created below
+    text-align: center;
+    cursor: pointer;
   }
 
   &__background {
+    // Menu background, linked to an empty div
     height: 6rem;
     width: 6rem;
     border-radius: 50%;
@@ -23,33 +30,41 @@
     top: 6.5rem;
     right: 6.5rem;
     z-index: 1000;
-
-    transform: scale(80);
+    transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1);
   }
 
   &__nav {
+    // The actual navigation element
     height: 100vh;
-    width: 100vw;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     z-index: 1500;
+    // Makes the navigation invisible by default
+    opacity: 0;
+    // Needs to be set to 0 or else the links will still be clickable (even though the cannot be seen)
+    width: 30%;
+    transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   &__list {
+    // The list that forms the navigation
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     list-style: none;
     text-align: center;
+    width: 100%;
   }
 
   &__item {
+    // Each list item in the navigation
     margin: 1rem;
   }
 
   &__link {
+    // The actual links
     &:link,
     &:visited {
       display: inline-block;
@@ -59,6 +74,7 @@
       padding: 1rem 2rem;
       text-decoration: none;
       text-transform: uppercase;
+      // This is key for the hover over link animation
       background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
       background-size: 220%;
       transition: all .4s;
@@ -66,10 +82,70 @@
 
     &:hover,
     &:active {
+      // Moves the background for swipe across effect
       background-position: 100%;
       color: $color-primary;
+      // Results in slight 'bump right' animation on hover
       transform: translateX(1rem);
     }
-    
+  }
+
+  // Checkbox hack! Looks for the checkbox being checked (occurs when the nav button is clicked on). The sibling selector (~) is then used to select the background, which is scaled up, and nav, which has the opacity and width changed.
+  &__checkbox:checked ~ &__background {
+    transform: scale(80);
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity:1;
+    width:100%;
+  }
+
+  // Icon
+  &__icon {
+    margin-top: 3.5rem;
+    position: relative;
+
+    // The three lines are created using before and after
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-dark-2;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    // Initial position of top and bottom lines set
+    &::before { top: -.8rem;}
+
+    &::after { top: .8rem;}
+  }
+
+  // Lines move out slightly on hover
+  &__button:hover &__icon::before { top: -1rem;}
+  &__button:hover &__icon::after { top: 1rem;}
+
+  // For button lines-to-cross animation, we select for when the checkbox is checked, then select its sibling (using +) and then the __button's child, which is the icon
+  &__checkbox:checked + &__button &__icon {
+    // This hides the central line
+    background-color: transparent;
+  }
+
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
   }
 }
