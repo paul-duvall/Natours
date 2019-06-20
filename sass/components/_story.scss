@@ -5,9 +5,20 @@
   background-color: rgba($color-white, .5);
   border-radius: 3px;
   padding: 6rem;
+  padding-left: 9rem;
   font-size: $default-font-size;
   // Skews the div
   transform: skewX(-12deg);
+
+  @include respond(tab-port){
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+  }
+
+  @include respond(phone) {
+    transform: skewX(0);
+  }
 
   &__shape {
     width: 15rem;
@@ -22,6 +33,10 @@
     // NB transform is used to add padding rather than the property padding since the element has been floated
     // NB skewX is there to correct the skewing of the shape
     transform: translateX(-3rem) skewX(12deg);
+
+    @include respond(phone) {
+      transform: translateX(-3rem) skewX(0);
+    }
   }
 
   &__img {
@@ -35,6 +50,9 @@
   &__text {
     // Corrects the skewing of the shape
     transform: skewX(12deg);
+
+    @include respond(phone){}
+      transform: skewX(0);
   }
 
   &__caption {
